@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modern Lanka Motors Blog — Latest spare parts trends, maintenance tips and automotive news from Sri Lanka's trusted parts supplier.">
+  <title>Blog — Modern Lanka Motors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page Hero ──────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      padding: 60px 40px 50px;
+      text-align: center;
+      width: 100%;
+    }
+    .page-hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .page-hero p { color: rgba(255,255,255,.75); font-size: 1rem; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--accent); }
+
+    /* ── Blog Layout ────────────────────── */
+    .blog-section {
+      padding: 80px 40px;
+      background: var(--off-white);
+      width: 100%;
+    }
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Blog Grid ──────────────────────── */
+    .blog-grid {
+      display: grid;
+      gap: 28px;
+      width: 100%;
+    }
+    .blog-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      width: 100%;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .blog-card-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card-img img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .blog-card:hover .blog-card-img img { transform: scale(1.06); }
+    .blog-cat-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: .7rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: .4px;
+    }
+    .blog-card-body { padding: 28px 28px 24px; display: flex; flex-direction: column; }
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .blog-date, .blog-read-time {
+      font-size: .75rem;
+      color: var(--gray-400);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .blog-card-body h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .blog-card-body p {
+      font-size: .9rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .blog-read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: .88rem;
+      transition: var(--transition);
+      align-self: flex-start;
+      min-height: 44px;
+    }
+    .blog-read-link:hover { gap: 10px; color: var(--primary); }
+
+    /* ── Sidebar ────────────────────────── */
+    .blog-sidebar { display: flex; flex-direction: column; gap: 28px; width: 100%; }
+    .sidebar-widget {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sidebar-widget h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .recent-post {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--gray-100);
+      align-items: flex-start;
+    }
+    .recent-post:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .recent-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--gray-100);
+    }
+    .recent-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .recent-title { font-weight: 700; font-size: .82rem; color: var(--primary); line-height: 1.4; margin-bottom: 4px; }
+    .recent-date { font-size: .74rem; color: var(--gray-400); }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pill {
+      padding: 6px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 100px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+    }
+    .tag-pill:hover { border-color: var(--blue); color: var(--blue); background: rgba(21,101,192,.05); }
+    .newsletter-form { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .newsletter-form input {
+      padding: 10px 14px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .88rem;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+      min-height: 44px;
+      width: 100%;
+    }
+    .newsletter-form input:focus { border-color: var(--blue); }
+    .newsletter-form button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      transition: var(--transition);
+      min-height: 44px;
+      width: 100%;
+    }
+    .newsletter-form button:hover { background: var(--blue); }
+
+    /* ── Responsive Overrides for Blog ──── */
+    @media (max-width: 1024px) {
+      .blog-layout {
+        gap: 30px;
+      }
+      .blog-card {
+        grid-template-columns: 240px 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-hero {
+        padding: 44px 20px 36px;
+      }
+      .blog-section {
+        padding: 40px 20px 60px;
+      }
+      .blog-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .blog-card {
+        grid-template-columns: 1fr;
+      }
+      .blog-card-img {
+        height: 200px;
+        width: 100%;
+      }
+      .blog-card-body {
+        padding: 20px;
+      }
+      .newsletter-form input {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-hero {
+        padding: 36px 16px 28px;
+      }
+      .page-hero h1 {
+        font-size: 1.6rem;
+      }
+      .blog-section {
+        padding: 30px 16px 50px;
+      }
+      .blog-card-body {
+        padding: 18px 14px;
+      }
+      .blog-card-body h2 {
+        font-size: 1.05rem;
+      }
+      .blog-card-img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span>📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></span>
+      <span>✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></span>
+    </div>
+    <div class="top-bar-right">
+      <span>🕐 Mon–Sat: 9 AM – 7 PM</span>
+      <span>📍 Gampola, Sri Lanka</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="mainNav">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.jpg" alt="Modern Lanka Motors Logo">
+      <div class="brand-text">
+        <span class="brand-name">Modern Lanka Motors</span>
+        <span class="brand-tagline">Premium Spare Parts</span>
+      </div>
+    </a>
+
+    <!-- Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Products.html">Products</a></li>
+        <li><a href="blgg.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-action-btns">
+          <a href="sign-in.html" class="btn-signin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,.9)">Blog</span>
+    </div>
+    <h1>News &amp; Updates</h1>
+    <p>Tips, trends, and insights from the world of automotive spare parts</p>
+  </div>
+
+  <!-- Blog Section -->
+  <section class="blog-section">
+    <div class="blog-layout">
+
+      <!-- Blog Articles -->
+      <div class="blog-grid">
+
+        <!-- Post 1 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="istockphoto-920823212-612x612.jpg" alt="Latest Spare Parts Trends">
+            <span class="blog-cat-tag">Trends</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 December 2024</span>
+              <span class="blog-read-time">⏱ 4 min read</span>
+            </div>
+            <h2>Latest Spare Parts Trends for 2024–2025</h2>
+            <p>Discover the top-rated spare parts dominating the Sri Lankan automotive market. From advanced steering systems to premium LED tail lights, find out what's trending and why vehicle owners are upgrading their parts this season.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="cde.jpg" alt="Top Engine Parts">
+            <span class="blog-cat-tag">Engine</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 November 2024</span>
+              <span class="blog-read-time">⏱ 5 min read</span>
+            </div>
+            <h2>Top Automotive Parts of 2024: What's Worth the Investment</h2>
+            <p>Upgrade your vehicle with the most high-performance parts of 2024. We review the best steering wheel systems, premium seat sets, and durable roof racks that offer the best value for Sri Lankan vehicle owners.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="efghi.jpg" alt="Maintenance Tips">
+            <span class="blog-cat-tag">Maintenance</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 October 2024</span>
+              <span class="blog-read-time">⏱ 3 min read</span>
+            </div>
+            <h2>5 Expert Maintenance Tips to Extend the Life of Your Spare Parts</h2>
+            <p>Learn how to properly care for your automotive spare parts to get the most out of your investment. From wiper blade maintenance to preserving your seat upholstery in Sri Lanka's tropical climate, our experts share their top tips.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Post 4 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="OIP (5).jpg" alt="Choosing the Right Parts">
+            <span class="blog-cat-tag">Guide</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 September 2024</span>
+              <span class="blog-read-time">⏱ 6 min read</span>
+            </div>
+            <h2>OEM vs Aftermarket: How to Choose the Right Spare Part</h2>
+            <p>One of the most common questions we receive is whether to go with OEM (Original Equipment Manufacturer) parts or premium aftermarket alternatives. In this guide, we break down the pros and cons to help you make the best decision for your vehicle and budget.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Post 5 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="acc.jpg" alt="Wiper Blades Guide">
+            <span class="blog-cat-tag">How-To</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 August 2024</span>
+              <span class="blog-read-time">⏱ 4 min read</span>
+            </div>
+            <h2>How to Choose and Replace Your Wiper Blades: A Complete Guide</h2>
+            <p>With Sri Lanka's frequent rain, keeping your wiper blades in top condition is essential for safe driving. Learn how to identify worn blades, choose the right replacement size, and install them yourself in under 10 minutes.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+        <!-- Post 6 -->
+        <article class="blog-card">
+          <div class="blog-card-img">
+            <img src="istockphoto-920823212-612x612.jpg" alt="Door Visors Benefits">
+            <span class="blog-cat-tag">Tips</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-meta">
+              <span class="blog-date">📅 July 2024</span>
+              <span class="blog-read-time">⏱ 3 min read</span>
+            </div>
+            <h2>Why Door Visors Are a Must-Have Accessory for Sri Lankan Vehicles</h2>
+            <p>Door visors do more than just look good — they protect your vehicle's interior from rain, reduce wind noise, and allow ventilation even in light rain. Find out why thousands of Sri Lankan vehicle owners are choosing to install them.</p>
+            <a href="#" class="blog-read-link">Read More →</a>
+          </div>
+        </article>
+
+      </div><!-- /.blog-grid -->
+
+      <!-- Sidebar -->
+      <aside class="blog-sidebar">
+
+        <div class="sidebar-widget">
+          <h3>Recent Posts</h3>
+          <div class="recent-post">
+            <div class="recent-thumb"><img src="istockphoto-920823212-612x612.jpg" alt="Post"></div>
+            <div>
+              <div class="recent-title">Latest Spare Parts Trends for 2024–2025</div>
+              <div class="recent-date">December 2024</div>
+            </div>
+          </div>
+          <div class="recent-post">
+            <div class="recent-thumb"><img src="cde.jpg" alt="Post"></div>
+            <div>
+              <div class="recent-title">Top Automotive Parts of 2024</div>
+              <div class="recent-date">November 2024</div>
+            </div>
+          </div>
+          <div class="recent-post">
+            <div class="recent-thumb"><img src="efghi.jpg" alt="Post"></div>
+            <div>
+              <div class="recent-title">5 Expert Maintenance Tips</div>
+              <div class="recent-date">October 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3>Popular Tags</h3>
+          <div class="tag-cloud">
+            <span class="tag-pill">Spare Parts</span>
+            <span class="tag-pill">Maintenance</span>
+            <span class="tag-pill">Steering</span>
+            <span class="tag-pill">Seats</span>
+            <span class="tag-pill">Wiper Blades</span>
+            <span class="tag-pill">Door Visors</span>
+            <span class="tag-pill">Tail Lights</span>
+            <span class="tag-pill">Tips</span>
+            <span class="tag-pill">Sri Lanka</span>
+          </div>
+        </div>
+
+        <div class="sidebar-widget">
+          <h3>Newsletter</h3>
+          <p style="font-size:.85rem;color:var(--gray-600);margin-bottom:14px;">Get the latest spare parts news and exclusive deals delivered to your inbox.</p>
+          <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Subscribe Now</button>
+          </form>
+        </div>
+
+        <div class="sidebar-widget" style="background:var(--primary);color:white;text-align:center;">
+          <h3 style="color:var(--accent);">Need a Part?</h3>
+          <p style="color:rgba(255,255,255,.7);font-size:.88rem;margin-bottom:16px;">Browse our full catalogue of 35+ genuine spare parts.</p>
+          <a href="Products.html" class="btn btn-primary" style="display:inline-flex;font-size:.88rem;padding:10px 20px;">Shop Now →</a>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="margin-bottom:12px;">
+          <div style="color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;">Modern Lanka Motors</div>
+          <div style="color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Premium Spare Parts</div>
+        </div>
+        <p>Your trusted partner for genuine automotive spare parts in Sri Lanka since 2012.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="#" class="social-btn" title="Facebook">f</a>
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="https://wa.me/94773721604" class="social-btn" title="WhatsApp">💬</a>
+          <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Modern Lanka Motors on TikTok" title="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About.html">About Us</a></li>
+          <li><a href="Products.html">Products</a></li>
+          <li><a href="blgg.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="Products.html">Steering Wheels</a></li>
+          <li><a href="Products.html">Seat Sets</a></li>
+          <li><a href="Products.html">Door Visors</a></li>
+          <li><a href="Products.html">Tail Lights</a></li>
+          <li><a href="Products.html">Wiper Blades</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">📍 No 248/A Kandy Rd, Gampola</div>
+        <div class="footer-contact-item">📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></div>
+        <div class="footer-contact-item">✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></div>
+        <div class="footer-contact-item">🕐 Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Modern Lanka Motors. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    // ── Mobile Menu Toggle ─────────────────────────
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    function subscribeNewsletter(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Subscribed!';
+      btn.style.background = 'var(--success)';
+      setTimeout(() => { btn.textContent = 'Subscribe Now'; btn.style.background = ''; }, 2500);
+      e.target.reset();
+    }
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+    });
+  </script>
+</body>
+</html>

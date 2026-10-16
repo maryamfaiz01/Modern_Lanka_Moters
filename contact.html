@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Modern Lanka Motors — No 248/A Kandy Rd, Gampola, Sri Lanka. Call 0773721604 or email famar636990@gmail.com.">
+  <title>Contact Us — Modern Lanka Motors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page Hero ──────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      padding: 60px 40px 50px;
+      text-align: center;
+      width: 100%;
+    }
+    .page-hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .page-hero p { color: rgba(255,255,255,.75); font-size: 1rem; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--accent); }
+
+    /* ── Info Cards Row ─────────────────── */
+    .contact-info-row {
+      background: var(--primary);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      width: 100%;
+    }
+    .info-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.1);
+      transition: var(--transition);
+    }
+    .info-pill:last-child { border-right: none; }
+    .info-pill:hover { background: rgba(255,255,255,.05); }
+    .info-pill-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .info-pill-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .7px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+    .info-pill-value { color: rgba(255,255,255,.9); font-size: .9rem; font-weight: 500; }
+    .info-pill-value a { color: rgba(255,255,255,.9); }
+
+    /* ── Main Contact Section ───────────── */
+    .contact-main {
+      padding: 80px 40px;
+      background: var(--off-white);
+      width: 100%;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Contact Form ───────────────────── */
+    .contact-form-wrap {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+      width: 100%;
+    }
+    .contact-form-wrap h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .contact-form-wrap p { color: var(--gray-600); font-size: .9rem; margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+    .form-group { margin-bottom: 20px; width: 100%; }
+    .form-group label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      letter-spacing: .2px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--off-white);
+      transition: var(--transition);
+      outline: none;
+      min-height: 44px;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(21,101,192,.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit-btn {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+    }
+    .form-submit-btn:hover { background: var(--blue); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .form-success {
+      display: none;
+      background: #ecfdf5;
+      border: 2px solid var(--success);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      color: var(--success);
+      font-weight: 700;
+      margin-top: 16px;
+    }
+
+    /* ── Details Panel ──────────────────── */
+    .contact-details-wrap { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+    .detail-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      width: 100%;
+    }
+    .detail-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .detail-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .detail-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .detail-card-header h3 { font-weight: 700; font-size: 1rem; color: var(--primary); }
+    .detail-card-header p { font-size: .82rem; color: var(--gray-400); }
+    .detail-line {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: .88rem;
+      color: var(--gray-600);
+      align-items: flex-start;
+      min-height: 24px;
+    }
+    .detail-line span:first-child { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Map ────────────────────────────── */
+    .map-section {
+      padding: 0 40px 80px;
+      background: var(--off-white);
+      width: 100%;
+    }
+    .map-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .map-inner h2 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+    .map-frame {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      width: 100%;
+    }
+    .map-frame iframe {
+      width: 100%;
+      height: 420px;
+      border: 0;
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ── Hours ──────────────────────────── */
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr td {
+      padding: 6px 0;
+      font-size: .88rem;
+      color: var(--gray-600);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .hours-table td:last-child { text-align: right; font-weight: 600; color: var(--primary); }
+    .open-badge {
+      display: inline-block;
+      background: rgba(16,185,129,.12);
+      color: var(--success);
+      font-size: .72rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 100px;
+      margin-left: 6px;
+    }
+
+    /* ── Responsive Overrides for Contact ─ */
+    @media (max-width: 1024px) {
+      .contact-grid {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-hero {
+        padding: 44px 20px 36px;
+      }
+      .contact-main {
+        padding: 40px 20px 50px;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .contact-form-wrap {
+        padding: 24px 20px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .contact-info-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .map-section {
+        padding: 0 20px 50px;
+      }
+      .map-frame iframe {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-hero {
+        padding: 36px 16px 28px;
+      }
+      .page-hero h1 {
+        font-size: 1.6rem;
+      }
+      .contact-info-row {
+        grid-template-columns: 1fr;
+      }
+      .info-pill {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding: 20px 16px;
+      }
+      .info-pill:last-child {
+        border-bottom: none;
+      }
+      .contact-main {
+        padding: 30px 16px 40px;
+      }
+      .contact-form-wrap {
+        padding: 20px 16px;
+      }
+      .map-section {
+        padding: 0 16px 40px;
+      }
+      .map-frame iframe {
+        height: 260px;
+      }
+      .detail-card {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span>📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></span>
+      <span>✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></span>
+    </div>
+    <div class="top-bar-right">
+      <span>🕐 Mon–Sat: 9 AM – 7 PM</span>
+      <span>📍 Gampola, Sri Lanka</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="mainNav">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.jpg" alt="Modern Lanka Motors Logo">
+      <div class="brand-text">
+        <span class="brand-name">Modern Lanka Motors</span>
+        <span class="brand-tagline">Premium Spare Parts</span>
+      </div>
+    </a>
+
+    <!-- Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Products.html">Products</a></li>
+        <li><a href="blgg.html">Blog</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-action-btns">
+          <a href="sign-in.html" class="btn-signin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,.9)">Contact Us</span>
+    </div>
+    <h1>Get in Touch</h1>
+    <p>Have questions about a part or need advice? We're here to help.</p>
+  </div>
+
+  <!-- Info Cards Row -->
+  <div class="contact-info-row">
+    <div class="info-pill">
+      <span class="info-pill-icon">📍</span>
+      <span class="info-pill-label">Location</span>
+      <span class="info-pill-value">No 248/A Kandy Rd, Gampola</span>
+    </div>
+    <div class="info-pill">
+      <span class="info-pill-icon">📞</span>
+      <span class="info-pill-label">Direct Lines</span>
+      <span class="info-pill-value"><a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></span>
+    </div>
+    <div class="info-pill">
+      <span class="info-pill-icon">💬</span>
+      <span class="info-pill-label">WhatsApp</span>
+      <span class="info-pill-value"><a href="https://wa.me/94773721604">Chat on WhatsApp</a></span>
+    </div>
+    <div class="info-pill">
+      <span class="info-pill-icon">🎵</span>
+      <span class="info-pill-label">TikTok</span>
+      <span class="info-pill-value"><a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer">@modern.lanka.motors</a></span>
+    </div>
+  </div>
+
+  <!-- Main Contact Section -->
+  <section class="contact-main">
+    <div class="contact-grid">
+
+      <!-- Contact Form -->
+      <div class="contact-form-wrap">
+        <h2>Send Us a Message</h2>
+        <p>Fill out the form below and our team will get back to you shortly.</p>
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Kamal" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Perera" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="kamal@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="077XXXXXXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="part">Part You're Looking For</label>
+            <select id="part">
+              <option value="">Select a category…</option>
+              <option value="steering">Steering Wheels</option>
+              <option value="seats">Seat Sets</option>
+              <option value="visors">Door Visors</option>
+              <option value="lights">Tail Lights</option>
+              <option value="cargo">Roof Racks</option>
+              <option value="wipers">Wiper Blades</option>
+              <option value="buffers">Bumpers</option>
+              <option value="meters">Vehicle Meters</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Tell us how we can help you…" required></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          ✅ Message sent! We'll get back to you within 24 hours.
+        </div>
+      </div>
+
+      <!-- Details Panel -->
+      <div class="contact-details-wrap">
+
+        <!-- TikTok Follow Card (Clearly Visible) -->
+        <div class="detail-card" style="border: 2px solid var(--accent); background: linear-gradient(135deg, #ffffff 0%, #fffdf8 100%);">
+          <div class="detail-card-header">
+            <div class="detail-icon" style="background:#010101;color:#ffffff;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+            </div>
+            <div>
+              <h3>Follow us on TikTok</h3>
+              <p>@modern.lanka.motors</p>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:16px;">Watch vehicle part demos, unboxings, customer cars, and maintenance tips on TikTok.</p>
+          <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width:100%;min-height:44px;justify-content:center;font-size:0.95rem;gap:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+            Follow us on TikTok (@modern.lanka.motors)
+          </a>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <div class="detail-icon">📍</div>
+            <div>
+              <h3>Shop Address</h3>
+              <p>Come visit us in Gampola</p>
+            </div>
+          </div>
+          <div class="detail-line">
+            <span>›</span>
+            <span>No 248/A Kandy Road, Gampola, Sri Lanka</span>
+          </div>
+          <div class="detail-line">
+            <span>›</span>
+            <span>Near Gampola Town Centre</span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <div class="detail-icon">📞</div>
+            <div>
+              <h3>Phone &amp; Email</h3>
+              <p>We respond quickly</p>
+            </div>
+          </div>
+          <div class="detail-line">
+            <span>📱</span>
+            <span><a href="tel:0773721604" style="color:var(--blue);font-weight:600;">0773721604</a></span>
+          </div>
+          <div class="detail-line">
+            <span>📱</span>
+            <span><a href="tel:0740777019" style="color:var(--blue);font-weight:600;">0740777019</a></span>
+          </div>
+          <div class="detail-line">
+            <span>✉️</span>
+            <span><a href="mailto:famar636990@gmail.com" style="color:var(--blue);">famar636990@gmail.com</a></span>
+          </div>
+          <div class="detail-line">
+            <span>💬</span>
+            <span><a href="https://wa.me/94773721604" style="color:var(--success);font-weight:600;">WhatsApp Us</a></span>
+          </div>
+          <div class="detail-line">
+            <span>🎵</span>
+            <span><a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:700;">TikTok: @modern.lanka.motors</a></span>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <div class="detail-icon">🕐</div>
+            <div>
+              <h3>Opening Hours</h3>
+              <p><span class="open-badge">Open Now</span></p>
+            </div>
+          </div>
+          <table class="hours-table">
+            <tr><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Saturday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Sunday</td><td style="color:#ef4444;font-weight:600;">Closed</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="map-section">
+    <div class="map-inner">
+      <h2>📍 Find Us on the Map</h2>
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15834.481118169111!2d80.573904!3d7.169818!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae36e270c313687%3A0x6b5ec123d39aab2d!2sModern%20Lanka%20Motors!5e0!3m2!1sen!2slk!4v1733214702607!5m2!1sen!2slk"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Modern Lanka Motors Location">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="margin-bottom:12px;">
+          <div style="color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;">Modern Lanka Motors</div>
+          <div style="color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Premium Spare Parts</div>
+        </div>
+        <p>Your trusted partner for genuine automotive spare parts in Sri Lanka since 2012.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="#" class="social-btn" title="Facebook">f</a>
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="https://wa.me/94773721604" class="social-btn" title="WhatsApp">💬</a>
+          <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Modern Lanka Motors on TikTok" title="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About.html">About Us</a></li>
+          <li><a href="Products.html">Products</a></li>
+          <li><a href="blgg.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="Products.html">Steering Wheels</a></li>
+          <li><a href="Products.html">Seat Sets</a></li>
+          <li><a href="Products.html">Door Visors</a></li>
+          <li><a href="Products.html">Tail Lights</a></li>
+          <li><a href="Products.html">Wiper Blades</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">📍 No 248/A Kandy Rd, Gampola</div>
+        <div class="footer-contact-item">📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></div>
+        <div class="footer-contact-item">✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></div>
+        <div class="footer-contact-item">🕐 Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Modern Lanka Motors. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    // ── Mobile Menu Toggle ─────────────────────────
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    function submitForm(e) {
+      e.preventDefault();
+      const btn = document.querySelector('.form-submit-btn');
+      btn.textContent = '⏳ Sending…';
+      btn.disabled = true;
+      setTimeout(() => {
+        document.getElementById('contactForm').reset();
+        document.getElementById('formSuccess').style.display = 'block';
+        btn.textContent = '✅ Message Sent!';
+        btn.style.background = 'var(--success)';
+        setTimeout(() => {
+          btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`;
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 3000);
+      }, 1200);
+    }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to Modern Lanka Motors — access your account, track orders and manage your wishlist.">
+  <title>Sign In — Modern Lanka Motors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #0d3b7a 100%);
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── Auth Layout ─────────────────────── */
+    .auth-page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .auth-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('mar.jpeg.jpg') center/cover no-repeat;
+      opacity: .08;
+    }
+
+    /* Floating shapes */
+    .auth-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .06;
+      animation: float-shape linear infinite;
+      pointer-events: none;
+    }
+    @keyframes float-shape {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      50%  { transform: translate(30px, -30px) rotate(180deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+
+    .auth-container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 900px;
+      width: 100%;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      box-sizing: border-box;
+    }
+
+    /* ── Left Panel ──────────────────────── */
+    .auth-left {
+      background: linear-gradient(160deg, var(--accent) 0%, var(--accent-dark) 100%);
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--primary);
+      box-sizing: border-box;
+    }
+    .auth-left-logo { margin-bottom: 40px; }
+    .auth-left-logo .brand-name { font-size: 1.2rem; font-family: 'Poppins', sans-serif; font-weight: 900; }
+    .auth-left-logo .brand-tagline { font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; opacity: .7; }
+    .auth-left h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .auth-left p { font-size: .9rem; opacity: .8; line-height: 1.7; margin-bottom: 32px; }
+    .auth-benefits { list-style: none; display: flex; flex-direction: column; gap: 14px; padding: 0; margin: 0; }
+    .auth-benefits li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      font-weight: 600;
+    }
+    .auth-benefit-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(11,36,71,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Right Panel (Form) ──────────────── */
+    .auth-right {
+      background: var(--white);
+      padding: 50px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .auth-tabs {
+      display: flex;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      margin-bottom: 32px;
+      gap: 4px;
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 11px 9px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: calc(var(--radius-sm) - 2px);
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--gray-600);
+      box-sizing: border-box;
+    }
+    .auth-tab.active {
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .auth-right h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .auth-right .sub-text {
+      font-size: .88rem;
+      color: var(--gray-400);
+      margin-bottom: 28px;
+    }
+
+    /* ── Form Styles ─────────────────────── */
+    .auth-form-group { margin-bottom: 18px; }
+    .auth-form-group label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .auth-input-wrap {
+      position: relative;
+    }
+    .auth-input-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      pointer-events: none;
+    }
+    .auth-form-group input {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 44px;
+      padding: 11px 14px 11px 40px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      transition: var(--transition);
+      outline: none;
+      background: var(--off-white);
+    }
+    .auth-form-group input:focus {
+      border-color: var(--blue);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(21,101,192,.1);
+    }
+    .auth-form-group input.error { border-color: #ef4444; }
+    .field-error { font-size: .75rem; color: #ef4444; margin-top: 4px; display: none; }
+    .field-error.show { display: block; }
+    .forgot-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .forgot-link {
+      font-size: .8rem;
+      color: var(--blue);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 4px;
+    }
+    .forgot-link:hover { color: var(--primary); }
+    .auth-submit-btn {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 44px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-submit-btn:hover { background: var(--blue); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: var(--gray-400);
+      font-size: .8rem;
+      font-weight: 600;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+    .social-logins { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-size: .83rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+    }
+    .social-login-btn:hover { border-color: var(--gray-400); background: var(--off-white); }
+    .auth-footer-link {
+      text-align: center;
+      font-size: .82rem;
+      color: var(--gray-400);
+      line-height: 1.6;
+    }
+    .auth-footer-link a {
+      color: var(--blue);
+      font-weight: 700;
+      display: inline-block;
+      padding: 6px 4px;
+      min-height: 44px;
+      line-height: 32px;
+    }
+
+    .auth-row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ── Sign Up form (hidden by default) ── */
+    #signupPanel { display: none; }
+    #signinPanel { display: block; }
+
+    /* ── Minimal Navbar ──────────────────── */
+    .auth-navbar {
+      background: rgba(11,36,71,.3);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 10;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .auth-navbar .brand-name { color: white; font-family: 'Poppins', sans-serif; font-weight: 800; }
+    .auth-navbar .brand-tagline { color: var(--accent); }
+    .auth-navbar a {
+      color: rgba(255,255,255,.8);
+      font-size: .85rem;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 6px;
+    }
+    .auth-navbar a:hover { color: var(--accent); }
+
+    /* ── Responsive Media Queries ───────── */
+    @media (max-width: 1024px) {
+      .auth-container {
+        max-width: 780px;
+      }
+      .auth-left {
+        padding: 40px 30px;
+      }
+      .auth-right {
+        padding: 40px 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .auth-page {
+        padding: 24px 16px;
+      }
+      .auth-container {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      .auth-left {
+        padding: 32px 24px;
+        text-align: center;
+      }
+      .auth-left-logo {
+        margin-bottom: 20px;
+      }
+      .auth-left h2 {
+        font-size: 1.5rem;
+      }
+      .auth-left p {
+        margin-bottom: 20px;
+      }
+      .auth-benefits {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        text-align: left;
+      }
+      .auth-right {
+        padding: 32px 24px;
+      }
+      .auth-navbar {
+        padding: 12px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-page {
+        padding: 16px 12px;
+      }
+      .auth-navbar {
+        padding: 10px 14px;
+      }
+      .auth-navbar .brand-name {
+        font-size: 1rem;
+      }
+      .auth-navbar .brand-tagline {
+        display: none;
+      }
+      .auth-left {
+        padding: 24px 18px;
+      }
+      .auth-left h2 {
+        font-size: 1.3rem;
+      }
+      .auth-left p {
+        font-size: .82rem;
+      }
+      .auth-benefits {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .auth-right {
+        padding: 28px 18px;
+      }
+      .auth-row-2col {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .social-logins {
+        grid-template-columns: 1fr;
+      }
+      .auth-tabs {
+        margin-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Navbar -->
+  <header class="auth-navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.jpg" alt="Modern Lanka Motors Logo" style="height:40px;width:auto;object-fit:contain;">
+      <div class="brand-text">
+        <span class="brand-name">Modern Lanka Motors</span>
+        <span class="brand-tagline">Premium Spare Parts</span>
+      </div>
+    </a>
+    <a href="index.html">← Back to Home</a>
+  </header>
+
+  <!-- Floating Shapes & Auth Box -->
+  <main class="auth-page">
+    <div class="auth-shape" style="width:200px;height:200px;top:-80px;left:-60px;animation-duration:18s;"></div>
+    <div class="auth-shape" style="width:120px;height:120px;bottom:40px;right:60px;animation-duration:12s;animation-delay:4s;"></div>
+    <div class="auth-shape" style="width:80px;height:80px;top:40%;left:10%;animation-duration:22s;animation-delay:8s;"></div>
+
+    <div class="auth-container">
+
+      <!-- Left Panel -->
+      <section class="auth-left">
+        <div class="auth-left-logo">
+          <div class="brand-name">Modern Lanka Motors</div>
+          <div class="brand-tagline">Premium Spare Parts</div>
+        </div>
+        <h2>Welcome Back!</h2>
+        <p>Sign in to access your account, track orders, and manage your wishlist.</p>
+        <ul class="auth-benefits">
+          <li>
+            <div class="auth-benefit-icon">🚗</div>
+            Browse 200+ spare parts
+          </li>
+          <li>
+            <div class="auth-benefit-icon">📦</div>
+            Track your orders easily
+          </li>
+          <li>
+            <div class="auth-benefit-icon">❤️</div>
+            Save your wishlist
+          </li>
+          <li>
+            <div class="auth-benefit-icon">💰</div>
+            Get exclusive member deals
+          </li>
+        </ul>
+      </section>
+
+      <!-- Right Panel -->
+      <section class="auth-right">
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="auth-tab active" id="signinTab" onclick="switchTab('signin')" role="tab" aria-selected="true">Sign In</button>
+          <button type="button" class="auth-tab" id="signupTab" onclick="switchTab('signup')" role="tab" aria-selected="false">Sign Up</button>
+        </div>
+
+        <!-- Sign In Panel -->
+        <div id="signinPanel">
+          <h2>Sign In</h2>
+          <p class="sub-text">Enter your credentials to access your account.</p>
+          <form id="signinForm" onsubmit="handleSignin(event)" novalidate>
+            <div class="auth-form-group">
+              <label for="signin-email">Email Address</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" id="signin-email" placeholder="your@email.com" required autocomplete="email">
+              </div>
+              <div class="field-error" id="signin-email-err">Please enter a valid email address.</div>
+            </div>
+            <div class="auth-form-group">
+              <label for="signin-password">Password</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="signin-password" placeholder="Enter your password" required autocomplete="current-password" minlength="6">
+              </div>
+              <div class="field-error" id="signin-pass-err">Password must be at least 6 characters.</div>
+            </div>
+            <div class="forgot-wrap">
+              <span class="forgot-link" onclick="alert('Password reset link will be sent to your email.')">Forgot password?</span>
+            </div>
+            <button type="submit" class="auth-submit-btn" id="signinBtn">Sign In</button>
+          </form>
+          <div class="divider">or continue with</div>
+          <div class="social-logins">
+            <button class="social-login-btn" onclick="socialLogin('Google')">
+              <span style="color:#DB4437;font-size:1rem;font-weight:900;">G</span> Google
+            </button>
+            <button class="social-login-btn" onclick="socialLogin('Facebook')">
+              <span style="color:#1877F2;font-size:1rem;font-weight:900;">f</span> Facebook
+            </button>
+          </div>
+          <div class="auth-footer-link">Don't have an account? <a onclick="switchTab('signup')" style="cursor:pointer;">Sign up free</a></div>
+        </div>
+
+        <!-- Sign Up Panel -->
+        <div id="signupPanel">
+          <h2>Create Account</h2>
+          <p class="sub-text">Join Modern Lanka Motors for exclusive deals and order tracking.</p>
+          <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
+            <div class="auth-row-2col">
+              <div class="auth-form-group">
+                <label for="su-fname">First Name</label>
+                <div class="auth-input-wrap">
+                  <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  <input type="text" id="su-fname" placeholder="First name" required>
+                </div>
+              </div>
+              <div class="auth-form-group">
+                <label for="su-lname">Last Name</label>
+                <div class="auth-input-wrap">
+                  <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  <input type="text" id="su-lname" placeholder="Last name" required>
+                </div>
+              </div>
+            </div>
+            <div class="auth-form-group">
+              <label for="su-email">Email Address</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input type="email" id="su-email" placeholder="your@email.com" required>
+              </div>
+            </div>
+            <div class="auth-form-group">
+              <label for="su-phone">Phone Number</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18.18z"/></svg>
+                <input type="tel" id="su-phone" placeholder="07XXXXXXXX">
+              </div>
+            </div>
+            <div class="auth-form-group">
+              <label for="su-password">Password</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="su-password" placeholder="Minimum 6 characters" required minlength="6">
+              </div>
+            </div>
+            <button type="submit" class="auth-submit-btn" id="signupBtn">Create Account</button>
+          </form>
+          <div class="divider">or continue with</div>
+          <div class="social-logins">
+            <button class="social-login-btn" onclick="socialLogin('Google')">
+              <span style="color:#DB4437;font-size:1rem;font-weight:900;">G</span> Google
+            </button>
+            <button class="social-login-btn" onclick="socialLogin('Facebook')">
+              <span style="color:#1877F2;font-size:1rem;font-weight:900;">f</span> Facebook
+            </button>
+          </div>
+          <div class="auth-footer-link">Already have an account? <a onclick="switchTab('signin')" style="cursor:pointer;">Sign in</a></div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tab) {
+      document.getElementById('signinPanel').style.display = tab === 'signin' ? 'block' : 'none';
+      document.getElementById('signupPanel').style.display = tab === 'signup' ? 'block' : 'none';
+      const isSignIn = tab === 'signin';
+      const inTab = document.getElementById('signinTab');
+      const upTab = document.getElementById('signupTab');
+      inTab.classList.toggle('active', isSignIn);
+      inTab.setAttribute('aria-selected', isSignIn ? 'true' : 'false');
+      upTab.classList.toggle('active', !isSignIn);
+      upTab.setAttribute('aria-selected', !isSignIn ? 'true' : 'false');
+    }
+
+    function handleSignin(e) {
+      e.preventDefault();
+      let valid = true;
+      const email = document.getElementById('signin-email');
+      const pass  = document.getElementById('signin-password');
+      const emailErr = document.getElementById('signin-email-err');
+      const passErr  = document.getElementById('signin-pass-err');
+
+      if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+        email.classList.add('error'); emailErr.classList.add('show'); valid = false;
+      } else { email.classList.remove('error'); emailErr.classList.remove('show'); }
+
+      if (!pass.value || pass.value.length < 6) {
+        pass.classList.add('error'); passErr.classList.add('show'); valid = false;
+      } else { pass.classList.remove('error'); passErr.classList.remove('show'); }
+
+      if (!valid) return;
+      const btn = document.getElementById('signinBtn');
+      btn.textContent = '⏳ Signing in…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✅ Welcome back!';
+        btn.style.background = 'var(--success)';
+        setTimeout(() => window.location.href = 'index.html', 1200);
+      }, 1200);
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      const btn = document.getElementById('signupBtn');
+      btn.textContent = '⏳ Creating account…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✅ Account created!';
+        btn.style.background = 'var(--success)';
+        setTimeout(() => window.location.href = 'index.html', 1200);
+      }, 1200);
+    }
+
+    function socialLogin(provider) {
+      alert(`${provider} login would be set up here with OAuth integration.`);
+    }
+  </script>
+</body>
+</html>

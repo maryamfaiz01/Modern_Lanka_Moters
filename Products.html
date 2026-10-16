@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse 35+ automotive spare parts at Modern Lanka Motors — steering wheels, seats, door visors, tail lights, wiper blades and more.">
+  <title>Products — Modern Lanka Motors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page Hero ──────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      padding: 60px 40px 50px;
+      text-align: center;
+      width: 100%;
+    }
+    .page-hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .page-hero p { color: rgba(255,255,255,.75); font-size: 1rem; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--accent); }
+
+    /* ── Filter Bar ─────────────────────── */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 40px;
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      width: 100%;
+    }
+    .filter-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 14px 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-inner::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 2px solid var(--gray-200);
+      background: transparent;
+      color: var(--gray-600);
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+    .filter-count {
+      background: var(--gray-200);
+      color: var(--gray-600);
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 100px;
+      margin-left: 6px;
+    }
+    .filter-btn.active .filter-count { background: rgba(255,255,255,.25); color: var(--white); }
+
+    /* ── Toolbar ────────────────────────── */
+    .toolbar {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--gray-200);
+      width: 100%;
+    }
+    .result-count { font-size: .9rem; color: var(--gray-600); }
+    .result-count strong { color: var(--primary); }
+    .search-products {
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: 0 12px;
+      gap: 8px;
+      transition: var(--transition);
+      min-height: 44px;
+    }
+    .search-products:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,.1); }
+    .search-products input {
+      border: none;
+      padding: 9px 0;
+      font-size: .88rem;
+      outline: none;
+      width: 240px;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+    }
+    .search-products svg { color: var(--gray-400); flex-shrink: 0; }
+
+    /* ── Product Grid ───────────────────── */
+    .products-section {
+      padding: 32px 40px 80px;
+      background: var(--off-white);
+      width: 100%;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 24px;
+      width: 100%;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .product-img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--gray-100);
+      height: 190px;
+      width: 100%;
+    }
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.1); }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--blue);
+      color: var(--white);
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .wishlist-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--white);
+      border: none;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      z-index: 3;
+    }
+    .wishlist-btn:hover { background: #ffe4e4; }
+    .product-body {
+      padding: 14px 16px 10px;
+      flex: 1;
+    }
+    .product-category {
+      font-size: .72rem;
+      color: var(--gray-400);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 5px;
+    }
+    .product-name {
+      font-weight: 700;
+      font-size: .92rem;
+      color: var(--primary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .product-price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .product-price small {
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--gray-400);
+    }
+    .product-footer { padding: 10px 16px 14px; }
+    .add-cart-btn {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .add-cart-btn:hover { background: var(--blue); }
+    .add-cart-btn.added { background: var(--success); }
+
+    /* ── Empty State ────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      display: none;
+    }
+    .empty-state.show { display: block; }
+    .empty-state .icon { font-size: 4rem; margin-bottom: 16px; }
+    .empty-state h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 8px; }
+    .empty-state p { color: var(--gray-400); }
+
+    /* ── Responsive Overrides for Products ─ */
+    @media (max-width: 1024px) {
+      .filter-bar {
+        padding: 0 24px;
+        top: 72px;
+      }
+      .toolbar {
+        padding: 16px 24px;
+      }
+      .products-section {
+        padding: 24px 24px 60px;
+      }
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-hero {
+        padding: 44px 20px 36px;
+      }
+      .filter-bar {
+        padding: 0 16px;
+        top: 68px;
+      }
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px 20px;
+      }
+      .search-products {
+        width: 100%;
+      }
+      .search-products input {
+        width: 100%;
+        min-height: 44px;
+        font-size: 16px;
+      }
+      .products-section {
+        padding: 20px 16px 60px;
+      }
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+      }
+      .product-img-wrap {
+        height: auto !important;
+        aspect-ratio: 4 / 3;
+      }
+      .product-img-wrap img {
+        height: 100% !important;
+        max-width: 100% !important;
+        object-fit: cover !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-hero {
+        padding: 36px 16px 28px;
+      }
+      .page-hero h1 {
+        font-size: 1.6rem;
+      }
+      .filter-bar {
+        top: 64px;
+        padding: 0 14px;
+      }
+      .toolbar {
+        padding: 14px 14px;
+      }
+      .product-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span>📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></span>
+      <span>✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></span>
+    </div>
+    <div class="top-bar-right">
+      <span>🕐 Mon–Sat: 9 AM – 7 PM</span>
+      <span>📍 Gampola, Sri Lanka</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="mainNav">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.jpg" alt="Modern Lanka Motors Logo">
+      <div class="brand-text">
+        <span class="brand-name">Modern Lanka Motors</span>
+        <span class="brand-tagline">Premium Spare Parts</span>
+      </div>
+    </a>
+
+    <!-- Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Products.html" class="active">Products</a></li>
+        <li><a href="blgg.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-action-btns">
+          <button class="btn-icon" id="cartBtn" title="Cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span class="badge" id="cartCount">0</span>
+          </button>
+          <a href="sign-in.html" class="btn-signin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,.9)">Products</span>
+    </div>
+    <h1>All Products</h1>
+    <p>Browse 35+ genuine spare parts for your vehicle</p>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-inner" id="filterBar">
+      <button class="filter-btn active" data-cat="all" onclick="filterProducts('all',this)">All Products <span class="filter-count" id="count-all">35</span></button>
+      <button class="filter-btn" data-cat="steering" onclick="filterProducts('steering',this)">Steering <span class="filter-count" id="count-steering">2</span></button>
+      <button class="filter-btn" data-cat="seats" onclick="filterProducts('seats',this)">Seats <span class="filter-count" id="count-seats">4</span></button>
+      <button class="filter-btn" data-cat="visors" onclick="filterProducts('visors',this)">Door Visors <span class="filter-count" id="count-visors">6</span></button>
+      <button class="filter-btn" data-cat="lights" onclick="filterProducts('lights',this)">Tail Lights <span class="filter-count" id="count-lights">4</span></button>
+      <button class="filter-btn" data-cat="cargo" onclick="filterProducts('cargo',this)">Roof Racks <span class="filter-count" id="count-cargo">5</span></button>
+      <button class="filter-btn" data-cat="wipers" onclick="filterProducts('wipers',this)">Wiper Blades <span class="filter-count" id="count-wipers">3</span></button>
+      <button class="filter-btn" data-cat="buffers" onclick="filterProducts('buffers',this)">Bumpers <span class="filter-count" id="count-buffers">3</span></button>
+      <button class="filter-btn" data-cat="meters" onclick="filterProducts('meters',this)">Vehicle Meters <span class="filter-count" id="count-meters">4</span></button>
+      <button class="filter-btn" data-cat="doors" onclick="filterProducts('doors',this)">Doors <span class="filter-count" id="count-doors">1</span></button>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <span class="result-count">Showing <strong id="visibleCount">35</strong> products</span>
+    <div class="search-products">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search products…" id="productSearch" oninput="searchProducts(this.value)">
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="product-grid" id="productGrid">
+
+      <!-- STEERING -->
+      <div class="product-card" data-cat="steering" data-name="multi-functional steering wheel">
+        <div class="product-img-wrap">
+          <img src="steering/S2.jpg" alt="Multi-Functional Steering Wheel">
+          <span class="product-badge">Popular</span>
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Steering</div>
+          <div class="product-name">Multi-Functional Steering Wheel</div>
+          <div class="product-price">Rs. 25,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Multi-Functional Steering Wheel')">
+            🛒 Add to Cart
+          </button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="steering" data-name="steering wheel premium">
+        <div class="product-img-wrap">
+          <img src="steering/OIP (3).jpg" alt="Premium Steering Wheel">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Steering</div>
+          <div class="product-name">Premium Steering Wheel</div>
+          <div class="product-price">Rs. 30,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Premium Steering Wheel')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- DOOR VISORS -->
+      <div class="product-card" data-cat="visors" data-name="sun visor door visor">
+        <div class="product-img-wrap">
+          <img src="sun visor/OIP (3).jpg" alt="Sun Visor">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Sun Visor Set</div>
+          <div class="product-price">Rs. 12,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Sun Visor Set')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="visors" data-name="sun visor door visor">
+        <div class="product-img-wrap">
+          <img src="sun visor/OIP (4).jpg" alt="Sun Visor">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Sun Visor — Type B</div>
+          <div class="product-price">Rs. 8,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Sun Visor Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="visors" data-name="door visor">
+        <div class="product-img-wrap">
+          <img src="sun visor/OIP (5).jpg" alt="Door Visor">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Door Visor — Type C</div>
+          <div class="product-price">Rs. 8,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Door Visor Type C')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="visors" data-name="door visor set">
+        <div class="product-img-wrap">
+          <img src="sun visor/OIP (1).jpg" alt="Door Visor Set">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Door Visor Set — Type D</div>
+          <div class="product-price">Rs. 10,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Door Visor Set Type D')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="visors" data-name="door visor set">
+        <div class="product-img-wrap">
+          <img src="sun visor/OIP (2).jpg" alt="Door Visor Set">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Door Visor Set — Type E</div>
+          <div class="product-price">Rs. 15,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Door Visor Set Type E')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="visors" data-name="door visor set">
+        <div class="product-img-wrap">
+          <img src="sun visor/download.jpg" alt="Door Visor">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Door Visors</div>
+          <div class="product-name">Door Visor Set — Economy</div>
+          <div class="product-price">Rs. 5,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Door Visor Set Economy')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- SEATS -->
+      <div class="product-card" data-cat="seats" data-name="seat set premium">
+        <div class="product-img-wrap">
+          <img src="seets/OIP (1).jpg" alt="Seat Set">
+          <span class="product-badge">Best Seller</span>
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Seats</div>
+          <div class="product-name">Premium Seat Set — Type A</div>
+          <div class="product-price">Rs. 30,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Premium Seat Set Type A')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="seats" data-name="seat set">
+        <div class="product-img-wrap">
+          <img src="seets/OIP (3).jpg" alt="Seat Set">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Seats</div>
+          <div class="product-name">Seat Set — Type B</div>
+          <div class="product-price">Rs. 25,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Seat Set Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="seats" data-name="seat set">
+        <div class="product-img-wrap">
+          <img src="seets/OIP.jpg" alt="Seat Set">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Seats</div>
+          <div class="product-name">Seat Set — Type C</div>
+          <div class="product-price">Rs. 20,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Seat Set Type C')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="seats" data-name="seat set economy">
+        <div class="product-img-wrap">
+          <img src="seets/OIP (4).jpg" alt="Seat Set Economy">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Seats</div>
+          <div class="product-name">Seat Set — Economy</div>
+          <div class="product-price">Rs. 25,000 <small>/ set</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Seat Set Economy')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- ROOF RACKS / CARGO -->
+      <div class="product-card" data-cat="cargo" data-name="roof rack cargo carrier hood rack">
+        <div class="product-img-wrap">
+          <img src="cargo career/download (1).jpg" alt="Roof Rack">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Roof Racks</div>
+          <div class="product-name">Roof Rack — Type A</div>
+          <div class="product-price">Rs. 38,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Roof Rack Type A')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="cargo" data-name="roof rack cargo">
+        <div class="product-img-wrap">
+          <img src="cargo career/download (2).jpg" alt="Roof Rack">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Roof Racks</div>
+          <div class="product-name">Roof Rack — Type B</div>
+          <div class="product-price">Rs. 35,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Roof Rack Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="cargo" data-name="roof rack cargo">
+        <div class="product-img-wrap">
+          <img src="cargo career/OIP (4).jpg" alt="Roof Rack">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Roof Racks</div>
+          <div class="product-name">Roof Rack — Type C</div>
+          <div class="product-price">Rs. 35,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Roof Rack Type C')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="cargo" data-name="roof rack cargo">
+        <div class="product-img-wrap">
+          <img src="cargo career/OIP (3).jpg" alt="Roof Rack">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Roof Racks</div>
+          <div class="product-name">Roof Rack — Type D</div>
+          <div class="product-price">Rs. 30,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Roof Rack Type D')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="cargo" data-name="roof bar cargo">
+        <div class="product-img-wrap">
+          <img src="cargo career/OIP (1).jpg" alt="Roof Bar">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Roof Racks</div>
+          <div class="product-name">Roof Bar</div>
+          <div class="product-price">Rs. 20,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Roof Bar')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- BUMPERS -->
+      <div class="product-card" data-cat="buffers" data-name="front bumper buffer">
+        <div class="product-img-wrap">
+          <img src="WhatsApp Image 2024-10-14 at 16.09.53_b0cae6fe.jpg" alt="Front Bumper Set">
+          <span class="product-badge">New</span>
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Bumpers</div>
+          <div class="product-name">Front Bumper Set</div>
+          <div class="product-price">Rs. 35,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Front Bumper Set')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="buffers" data-name="front bumper">
+        <div class="product-img-wrap">
+          <img src="seets/OIP (6).jpg" alt="Front Bumper">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Bumpers</div>
+          <div class="product-name">Front Bumper — Type B</div>
+          <div class="product-price">Rs. 25,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Front Bumper Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="buffers" data-name="front bumper">
+        <div class="product-img-wrap">
+          <img src="seets/OIP (7).jpg" alt="Front Bumper">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Bumpers</div>
+          <div class="product-name">Front Bumper — Type C</div>
+          <div class="product-price">Rs. 28,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Front Bumper Type C')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- DOOR LIGHT -->
+      <div class="product-card" data-cat="lights" data-name="door light">
+        <div class="product-img-wrap">
+          <img src="sun visor/download (4).jpg" alt="Door Light">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Lights</div>
+          <div class="product-name">Door Light</div>
+          <div class="product-price">Rs. 20,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Door Light')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- TAIL LIGHTS -->
+      <div class="product-card" data-cat="lights" data-name="tail lights led">
+        <div class="product-img-wrap">
+          <img src="WhatsApp Image 2024-10-13 at 20.31.41_58e54205.jpg" alt="Tail Light Set">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Lights</div>
+          <div class="product-name">LED Tail Light Set</div>
+          <div class="product-price">Rs. 35,000 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'LED Tail Light Set')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="lights" data-name="tail lights led premium">
+        <div class="product-img-wrap">
+          <img src="lights.jpg" alt="Tail Light Premium">
+          <span class="product-badge">Popular</span>
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Lights</div>
+          <div class="product-name">LED Tail Lights — Premium</div>
+          <div class="product-price">Rs. 50,000 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'LED Tail Lights Premium')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="lights" data-name="tail lights">
+        <div class="product-img-wrap">
+          <img src="WhatsApp Image 2024-10-15 at 04.55.38_8bf47a92.jpg" alt="Tail Lights">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Lights</div>
+          <div class="product-name">Tail Lights — Type B</div>
+          <div class="product-price">Rs. 60,000 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Tail Lights Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- VEHICLE METERS -->
+      <div class="product-card" data-cat="meters" data-name="vehicle meter dashboard">
+        <div class="product-img-wrap">
+          <img src="caravan/OIP (7).jpg" alt="Vehicle Meter">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Vehicle Meters</div>
+          <div class="product-name">Vehicle Meter — Type A</div>
+          <div class="product-price">Rs. 20,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Vehicle Meter Type A')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="meters" data-name="vehicle meter dashboard">
+        <div class="product-img-wrap">
+          <img src="caravan/OIP (1).jpg" alt="Vehicle Meter">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Vehicle Meters</div>
+          <div class="product-name">Vehicle Meter — Type B</div>
+          <div class="product-price">Rs. 25,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Vehicle Meter Type B')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="meters" data-name="vehicle meter">
+        <div class="product-img-wrap">
+          <img src="caravan/OIP.jpg" alt="Vehicle Meter">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Vehicle Meters</div>
+          <div class="product-name">Vehicle Meter — Type C</div>
+          <div class="product-price">Rs. 20,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Vehicle Meter Type C')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="meters" data-name="vehicle meter compact">
+        <div class="product-img-wrap">
+          <img src="caravan/OIP (2).jpg" alt="Vehicle Meter Compact">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Vehicle Meters</div>
+          <div class="product-name">Vehicle Meter — Compact</div>
+          <div class="product-price">Rs. 15,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Vehicle Meter Compact')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- WIPER BLADES -->
+      <div class="product-card" data-cat="wipers" data-name="wiper blades windshield">
+        <div class="product-img-wrap">
+          <img src="wiper blade/7.jpg" alt="Wiper Blades">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Wiper Blades</div>
+          <div class="product-name">Wiper Blades — Standard</div>
+          <div class="product-price">Rs. 2,500 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Wiper Blades Standard')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="wipers" data-name="wiper blades premium">
+        <div class="product-img-wrap">
+          <img src="wiper blade/6.jpg" alt="Wiper Blades Premium">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Wiper Blades</div>
+          <div class="product-name">Wiper Blades — Premium</div>
+          <div class="product-price">Rs. 3,500 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Wiper Blades Premium')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="wipers" data-name="wiper blades economy">
+        <div class="product-img-wrap">
+          <img src="wiper blade/4.jpg" alt="Wiper Blades Economy">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Wiper Blades</div>
+          <div class="product-name">Wiper Blades — Economy</div>
+          <div class="product-price">Rs. 2,500 <small>/ pair</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Wiper Blades Economy')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- BACK DOOR -->
+      <div class="product-card" data-cat="doors" data-name="back door rear door">
+        <div class="product-img-wrap">
+          <img src="Back Door.jpg" alt="Back Door">
+          <button class="wishlist-btn" onclick="toggleWish(this)" aria-label="Add to wishlist">🤍</button>
+        </div>
+        <div class="product-body">
+          <div class="product-category">Doors</div>
+          <div class="product-name">Back Door</div>
+          <div class="product-price">Rs. 50,000 <small>/ unit</small></div>
+        </div>
+        <div class="product-footer">
+          <button class="add-cart-btn" onclick="addToCart(this,'Back Door')">🛒 Add to Cart</button>
+        </div>
+      </div>
+
+    </div><!-- /.product-grid -->
+
+    <div class="empty-state" id="emptyState">
+      <div class="icon">🔍</div>
+      <h3>No Products Found</h3>
+      <p>Try a different search term or category.</p>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="margin-bottom:12px;">
+          <div class="brand-name" style="color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;">Modern Lanka Motors</div>
+          <div class="brand-tagline" style="color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Premium Spare Parts</div>
+        </div>
+        <p>Your trusted partner for genuine automotive spare parts in Sri Lanka since 2012.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="#" class="social-btn" title="Facebook">f</a>
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="https://wa.me/94773721604" class="social-btn" title="WhatsApp">💬</a>
+          <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Modern Lanka Motors on TikTok" title="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About.html">About Us</a></li>
+          <li><a href="Products.html">Products</a></li>
+          <li><a href="blgg.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#" onclick="filterProducts('steering',null);return false;">Steering Wheels</a></li>
+          <li><a href="#" onclick="filterProducts('seats',null);return false;">Seat Sets</a></li>
+          <li><a href="#" onclick="filterProducts('visors',null);return false;">Door Visors</a></li>
+          <li><a href="#" onclick="filterProducts('lights',null);return false;">Tail Lights</a></li>
+          <li><a href="#" onclick="filterProducts('wipers',null);return false;">Wiper Blades</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">📍 No 248/A Kandy Rd, Gampola</div>
+        <div class="footer-contact-item">📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></div>
+        <div class="footer-contact-item">✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></div>
+        <div class="footer-contact-item">🕐 Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Modern Lanka Motors. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    // ── Mobile Menu Toggle ─────────────────────────
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    let cart = [];
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    function filterProducts(cat, btnEl) {
+      activeCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      else {
+        const match = document.querySelector(`.filter-btn[data-cat="${cat}"]`);
+        if (match) match.classList.add('active');
+      }
+      applyFilters();
+    }
+
+    function searchProducts(term) {
+      searchTerm = term.toLowerCase().trim();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('.product-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const catMatch = activeCategory === 'all' || card.dataset.cat === activeCategory;
+        const nameMatch = !searchTerm || card.dataset.name.includes(searchTerm);
+        const show = catMatch && nameMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      document.getElementById('visibleCount').textContent = visible;
+      document.getElementById('emptyState').classList.toggle('show', visible === 0);
+    }
+
+    function addToCart(btn, name) {
+      cart.push(name);
+      document.getElementById('cartCount').textContent = cart.length;
+      btn.textContent = '✓ Added!';
+      btn.classList.add('added');
+      setTimeout(() => {
+        btn.textContent = '🛒 Add to Cart';
+        btn.classList.remove('added');
+      }, 1600);
+    }
+
+    function toggleWish(btn) {
+      btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+    }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+    });
+
+    const hash = window.location.hash.replace('#','');
+    if (hash) filterProducts(hash, null);
+  </script>
+</body>
+</html>

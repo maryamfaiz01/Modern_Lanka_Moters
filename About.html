@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Modern Lanka Motors — Sri Lanka's trusted automotive spare parts supplier since 2012. Learn our mission, vision, and values.">
+  <title>About Us — Modern Lanka Motors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page Hero ──────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, #0d3b7a 100%);
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('abt.jpg') center/cover no-repeat;
+      opacity: .1;
+    }
+    .page-hero-content { position: relative; z-index: 2; text-align: center; }
+    .page-hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .page-hero p { color: rgba(255,255,255,.75); font-size: 1.1rem; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--accent); }
+    .breadcrumb span { opacity: .5; }
+
+    /* ── About Intro ────────────────────── */
+    .about-intro {
+      padding: 80px 40px;
+      background: var(--white);
+    }
+    .about-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-img-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: var(--accent);
+      color: var(--primary);
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.3;
+      box-shadow: var(--shadow-md);
+    }
+    .about-img-badge span { display: block; font-size: .75rem; font-weight: 500; }
+    .about-text-wrap {}
+    .about-text-wrap .badge-tag { margin-bottom: 16px; }
+    .about-text-wrap h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .about-text-wrap p {
+      color: var(--gray-600);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    .about-list { list-style: none; margin-bottom: 28px; }
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--gray-600);
+      font-size: .95rem;
+    }
+    .about-list li::before {
+      content: '✓';
+      background: var(--success);
+      color: var(--white);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Stats Bar ──────────────────────── */
+    .stats-bar {
+      background: var(--off-white);
+      padding: 50px 40px;
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: block;
+    }
+    .stat-lbl { font-size: .85rem; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .stat-divider {
+      width: 1px;
+      background: var(--gray-200);
+      align-self: stretch;
+    }
+
+    /* ── Values ─────────────────────────── */
+    .values-section {
+      padding: 80px 40px;
+      background: var(--white);
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .value-card {
+      background: var(--off-white);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      transition: var(--transition);
+      border-top: 4px solid var(--gray-200);
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+    .value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-top-color: var(--accent); }
+    .value-card:hover::after { transform: scaleX(1); }
+    .value-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .value-card h3 {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .value-card p { color: var(--gray-600); font-size: .9rem; line-height: 1.7; }
+
+    /* ── Story ──────────────────────────── */
+    .story-section {
+      padding: 80px 40px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    }
+    .story-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .story-section .section-title { color: var(--white); }
+    .story-section .accent-line { margin: 12px auto 20px; }
+    .story-section p {
+      color: rgba(255,255,255,.75);
+      font-size: 1.05rem;
+      line-height: 1.85;
+    }
+
+    /* ── Timeline ───────────────────────── */
+    .timeline {
+      padding: 80px 40px;
+      background: var(--off-white);
+    }
+    .timeline-items {
+      max-width: 700px;
+      margin: 48px auto 0;
+      position: relative;
+    }
+    .timeline-items::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--blue));
+    }
+    .timeline-item {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      align-items: flex-start;
+    }
+    .timeline-dot {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      font-size: .8rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(11,36,71,.3);
+    }
+    .timeline-body {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      flex: 1;
+      box-shadow: var(--shadow-sm);
+    }
+    .timeline-year { font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .5px; margin-bottom: 4px; }
+    .timeline-body h4 { font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .timeline-body p { font-size: .88rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── Responsive Overrides for About ─── */
+    @media (max-width: 1024px) {
+      .about-intro-grid {
+        gap: 40px;
+      }
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-hero {
+        padding: 50px 20px 40px;
+      }
+      .about-intro {
+        padding: 50px 20px;
+      }
+      .about-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .about-img-wrap img {
+        height: auto;
+        max-height: 350px;
+      }
+      .about-text-wrap h2 {
+        font-size: 1.6rem;
+      }
+      .about-text-wrap .btn-blue {
+        width: 100%;
+        justify-content: center;
+      }
+      .stats-bar {
+        padding: 36px 20px;
+      }
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 16px;
+      }
+      .stat-divider {
+        display: none;
+      }
+      .stat-number {
+        font-size: 2rem;
+      }
+      .values-section {
+        padding: 50px 20px;
+      }
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-top: 32px;
+      }
+      .story-section {
+        padding: 50px 20px;
+      }
+      .timeline {
+        padding: 50px 20px;
+      }
+      .timeline-items {
+        margin-top: 32px;
+      }
+      .timeline-item {
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-hero {
+        padding: 40px 16px 30px;
+      }
+      .about-img-badge {
+        bottom: 14px;
+        left: 14px;
+        padding: 8px 14px;
+        font-size: .88rem;
+      }
+      .about-text-wrap h2 {
+        font-size: 1.4rem;
+      }
+      .stats-bar {
+        padding: 28px 16px;
+      }
+      .values-section {
+        padding: 40px 16px;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .story-section {
+        padding: 40px 16px;
+      }
+      .timeline {
+        padding: 40px 16px;
+      }
+      .timeline-dot {
+        width: 42px;
+        height: 42px;
+        font-size: .75rem;
+      }
+      .timeline-items::before {
+        left: 20px;
+      }
+      .timeline-body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span>📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></span>
+      <span>✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></span>
+    </div>
+    <div class="top-bar-right">
+      <span>🕐 Mon–Sat: 9 AM – 7 PM</span>
+      <span>📍 Gampola, Sri Lanka</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="mainNav">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.jpg" alt="Modern Lanka Motors Logo">
+      <div class="brand-text">
+        <span class="brand-name">Modern Lanka Motors</span>
+        <span class="brand-tagline">Premium Spare Parts</span>
+      </div>
+    </a>
+
+    <!-- Hamburger Toggle Button -->
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="About.html" class="active">About</a></li>
+        <li><a href="Products.html">Products</a></li>
+        <li><a href="blgg.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="nav-action-btns">
+          <a href="sign-in.html" class="btn-signin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <span style="color:rgba(255,255,255,.9)">About Us</span>
+      </div>
+      <h1>About Modern Lanka Motors</h1>
+      <p>Your trusted partner for premium automotive spare parts since 2012</p>
+    </div>
+  </div>
+
+  <!-- About Intro -->
+  <section class="about-intro">
+    <div class="about-intro-grid">
+      <div class="about-img-wrap">
+        <img src="Moden Lanka Moters.jpg" alt="Modern Lanka Motors Shop">
+        <div class="about-img-badge">
+          12+ <span>Years of Excellence</span>
+        </div>
+      </div>
+      <div class="about-text-wrap">
+        <span class="badge-tag badge-accent">Who We Are</span>
+        <h2>Sri Lanka's Trusted Source for Genuine Spare Parts</h2>
+        <p>Welcome to <strong>Modern Lanka Motors</strong>, your trusted supplier of high-quality automotive spare parts. Located in Gampola, Sri Lanka, we serve vehicle owners across the island with genuine OEM and premium aftermarket parts.</p>
+        <p>With over a decade of experience, we strive to deliver excellent service and the best products to keep your vehicles in top condition — from steering wheels and seat sets to lights, wipers, and beyond.</p>
+        <ul class="about-list">
+          <li>200+ genuine spare parts always in stock</li>
+          <li>Expert advice from our knowledgeable team</li>
+          <li>Island-wide delivery within 2–3 business days</li>
+          <li>Satisfaction guarantee on every purchase</li>
+        </ul>
+        <a href="contact.html" class="btn btn-blue">Get in Touch →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number">12+</span>
+        <span class="stat-lbl">Years in Business</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">200+</span>
+        <span class="stat-lbl">Products</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-lbl">Happy Customers</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">25+</span>
+        <span class="stat-lbl">Vehicle Brands</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag badge-blue">Our Foundation</span>
+        <h2 class="section-title" style="margin-top:12px;">Our Mission, Vision &amp; Values</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle">The principles that guide everything we do</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-icon">🎯</span>
+          <h3>Our Mission</h3>
+          <p>To offer premium spare parts and unparalleled customer support that ensures complete client satisfaction at every step of the journey.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">🔭</span>
+          <h3>Our Vision</h3>
+          <p>To be Sri Lanka's leading supplier of automotive spare parts, renowned for quality, reliability, and a customer-first approach.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">💎</span>
+          <h3>Our Values</h3>
+          <p>Integrity, quality, and a customer-first mindset are at the core of everything we do — from sourcing parts to delivering them to your door.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">🏆</span>
+          <h3>Our Experience</h3>
+          <p>Over 12 years of expertise in the automotive industry, serving clients nationwide with the best spare parts and unmatched service.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="story-section">
+    <div class="story-inner">
+      <span class="badge-tag" style="background:rgba(245,158,11,.2);color:var(--accent);border:1px solid rgba(245,158,11,.3);">Our Journey</span>
+      <h2 class="section-title" style="margin-top:16px;">Our Story</h2>
+      <div class="accent-line"></div>
+      <p>
+        <strong style="color:var(--accent);">Modern Lanka Motors</strong> began as a small family business in 2012, born from a passion for helping Sri Lankan vehicle owners find the right parts at fair prices. Over the years, we grew from a modest shop in Gampola into one of the most trusted spare parts suppliers in the Central Province.
+      </p>
+      <p style="margin-top:18px;">
+        Our focus has always remained the same: delivering high-quality, genuine parts and ensuring every customer leaves satisfied. Today we stock over 200 products across 8 categories, and continue to grow — but our commitment to quality, honesty, and service never changes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag badge-accent">Milestones</span>
+        <h2 class="section-title" style="margin-top:12px;">Our Journey Over the Years</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="timeline-items">
+        <div class="timeline-item">
+          <div class="timeline-dot">2012</div>
+          <div class="timeline-body">
+            <div class="timeline-year">2012</div>
+            <h4>Founded in Gampola</h4>
+            <p>Modern Lanka Motors opened its doors with a small selection of steering and seating accessories.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2015</div>
+          <div class="timeline-body">
+            <div class="timeline-year">2015</div>
+            <h4>Expanded Product Range</h4>
+            <p>Added lights, door visors, wiper blades, and roof racks to the catalogue.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2019</div>
+          <div class="timeline-body">
+            <div class="timeline-year">2019</div>
+            <h4>Island-Wide Delivery Launched</h4>
+            <p>Started delivering to all districts in Sri Lanka, serving customers beyond the Central Province.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2024</div>
+          <div class="timeline-body">
+            <div class="timeline-year">2024</div>
+            <h4>Online Presence Established</h4>
+            <p>Launched our website to make it easier for customers to browse and contact us from anywhere in the country.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Follow us on TikTok -->
+  <div style="text-align:center;padding:28px 20px;background:var(--white);border-top:1px solid var(--gray-200);">
+    <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-weight:700;font-size:0.95rem;min-height:44px;padding:10px 20px;border-radius:var(--radius-sm);background:var(--gray-100);transition:var(--transition);" onmouseover="this.style.background='var(--gray-200)'" onmouseout="this.style.background='var(--gray-100)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+      Follow us on TikTok (@modern.lanka.motors) →
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-text" style="margin-bottom:12px;">
+          <span class="brand-name" style="color:white;font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;">Modern Lanka Motors</span>
+          <span class="brand-tagline" style="color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Premium Spare Parts</span>
+        </div>
+        <p>Your trusted partner for genuine automotive spare parts in Sri Lanka since 2012.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="#" class="social-btn" title="Facebook">f</a>
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="https://wa.me/94773721604" class="social-btn" title="WhatsApp">💬</a>
+          <a href="https://www.tiktok.com/@modern.lanka.motors" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Modern Lanka Motors on TikTok" title="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.11V9.37a6.33 6.33 0 0 0-.85-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.28 8.28 0 0 0 4.84 1.54V7.15c-.37 0-.74-.08-1.07-.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About.html">About Us</a></li>
+          <li><a href="Products.html">Products</a></li>
+          <li><a href="blgg.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="Products.html">Steering Wheels</a></li>
+          <li><a href="Products.html">Seat Sets</a></li>
+          <li><a href="Products.html">Door Visors</a></li>
+          <li><a href="Products.html">Tail Lights</a></li>
+          <li><a href="Products.html">Wiper Blades</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">📍 No 248/A Kandy Rd, Gampola</div>
+        <div class="footer-contact-item">📞 <a href="tel:0773721604">0773721604</a> / <a href="tel:0740777019">0740777019</a></div>
+        <div class="footer-contact-item">✉️ <a href="mailto:famar636990@gmail.com">famar636990@gmail.com</a></div>
+        <div class="footer-contact-item">🕐 Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Modern Lanka Motors. All rights reserved.</span>
+      <div style="display:flex;gap:20px;"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </footer>
+
+  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    // ── Mobile Menu Toggle ─────────────────────────
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          navToggle.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // ── Scroll to Top ──────────────────────────────
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+    });
+  </script>
+</body>
+</html>
